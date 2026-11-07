@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06090e" />
+      <stop offset="50%" stop-color="#0b111e" />
+      <stop offset="100%" stop-color="#080c14" />
+    </linearGradient>
+
+    <!-- Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#101726" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0d1320" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Accent Cyan Gradient -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <!-- Emerald Gradient -->
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#34d399" />
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .font-mono { font-family: 'JetBrains Mono', monospace, Consolas, sans-serif; }
+    .font-sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+  </style>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="680" rx="16" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Subtle Blueprint Grid Pattern -->
+  <g opacity="0.15">
+    <path d="M0 60 H1200 M0 120 H1200 M0 180 H1200 M0 240 H1200 M0 300 H1200 M0 360 H1200 M0 420 H1200 M0 480 H1200 M0 540 H1200 M0 600 H1200" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 4"/>
+    <path d="M80 0 V680 M160 0 V680 M240 0 V680 M320 0 V680 M400 0 V680 M480 0 V680 M560 0 V680 M640 0 V680 M720 0 V680 M800 0 V680 M880 0 V680 M960 0 V680 M1040 0 V680 M1120 0 V680" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 4"/>
+  </g>
+
+  <!-- TOP TELEMETRY NAVBAR -->
+  <rect x="2" y="2" width="1196" height="56" rx="14" fill="#090e18" stroke="#1e293b" stroke-width="1"/>
+  
+  <!-- 3D Isometric Cube Icon -->
+  <g transform="translate(30, 16)">
+    <!-- Top Face -->
+    <polygon points="12,2 24,8 12,14 0,8" fill="#a855f7" opacity="0.8"/>
+    <!-- Left Face -->
+    <polygon points="0,8 12,14 12,28 0,22" fill="#00f0ff" opacity="0.9"/>
+    <!-- Right Face -->
+    <polygon points="12,14 24,8 24,22 12,28" fill="#38bdf8" opacity="0.6"/>
+  </g>
+
+  <!-- Brand Title -->
+  <text x="66" y="34" fill="#ffffff" font-weight="800" font-size="16" class="font-mono" letter-spacing="1.5">CUBICORE</text>
+  <rect x="160" y="22" width="76" height="18" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+  <text x="168" y="35" fill="#38bdf8" font-size="10" font-weight="700" class="font-mono">MCP CORE</text>
+
+  <!-- Telemetry Badges -->
+  <g transform="translate(480, 18)">
+    <rect width="180" height="24" rx="6" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+    <circle cx="14" cy="12" r="3.5" fill="#10b981"/>
+    <text x="24" y="16" fill="#9ca3af" font-size="10" class="font-mono">HOST: <tspan fill="#34d399" font-weight="600">OpenCode 1.18.x</tspan></text>
+  </g>
+
+  <g transform="translate(675, 18)">
+    <rect width="165" height="24" rx="6" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+    <text x="12" y="16" fill="#9ca3af" font-size="10" class="font-mono">CYCLE: <tspan fill="#fbbf24" font-weight="600">1 / 3 Bounded</tspan></text>
+  </g>
+
+  <g transform="translate(855, 18)">
+    <rect width="165" height="24" rx="6" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+    <text x="12" y="16" fill="#9ca3af" font-size="10" class="font-mono">CACHE: <tspan fill="#00f0ff" font-weight="600">3.5× Saved (25M)</tspan></text>
+  </g>
+
+  <g transform="translate(1035, 18)">
+    <rect width="135" height="24" rx="6" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+    <text x="14" y="16" fill="#34d399" font-size="10" font-weight="700" class="font-mono">WORKTREES: 3 OK</text>
+  </g>
+
+  <!-- GUIDED WORKFLOW STATUS STRIP -->
+  <g transform="translate(30, 72)">
+    <rect width="1140" height="36" rx="8" fill="#0d1526" stroke="#1e293b" stroke-width="1"/>
+    <rect x="10" y="8" width="130" height="20" rx="4" fill="#38bdf8"/>
+    <text x="18" y="22" fill="#032030" font-size="9" font-weight="800" class="font-mono">GUIDED NEXT STEP</text>
+    <text x="155" y="23" fill="#94a3b8" font-size="12" class="font-sans">State: <tspan fill="#ffffff" font-weight="700">PLAN READY</tspan> → Recommended:</text>
+    <rect x="400" y="6" width="155" height="24" rx="5" fill="#00f0ff" fill-opacity="0.15" stroke="#00f0ff" stroke-width="1"/>
+    <text x="410" y="22" fill="#00f0ff" font-size="11" font-weight="700" class="font-mono">/cubicore:execute</text>
+    <text x="575" y="22" fill="#64748b" font-size="11" class="font-sans">or alternatives: /estimate · /refine (Disk state preserved)</text>
+  </g>
+
+  <!-- MAIN DASHBOARD CONTENT AREA -->
+
+  <!-- LEFT: DYNAMIC CUBICLE FACTORY (WIDTH: 740) -->
+  <g transform="translate(30, 122)">
+    <rect width="740" height="526" rx="12" fill="url(#cardGrad)" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Section Header -->
+    <text x="24" y="32" fill="#00f0ff" font-size="11" font-weight="700" class="font-mono" letter-spacing="1">DYNAMIC CUBICLE STAGE</text>
+    <text x="24" y="52" fill="#ffffff" font-size="16" font-weight="700" class="font-sans">Autonomous Associate Fleet in Parallel Worktrees</text>
+    <rect x="580" y="20" width="136" height="22" rx="4" fill="#111827" stroke="#10b981" stroke-width="1"/>
+    <text x="590" y="35" fill="#10b981" font-size="10" font-weight="700" class="font-mono">● CAPACITY: 3 CELLS</text>
+
+    <!-- Cubicle Cell 1: Associate Alpha (Frontend) -->
+    <g transform="translate(24, 74)">
+      <rect width="216" height="230" rx="8" fill="#0b101c" stroke="#2563eb" stroke-width="1.5"/>
+      <rect x="0" y="0" width="216" height="3" fill="#00f0ff"/>
+      <!-- Avatar & Name -->
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#0284c7" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+      <text x="22" y="33" fill="#38bdf8" font-size="11" font-weight="800" class="font-mono">AA</text>
+      <text x="50" y="26" fill="#ffffff" font-size="12" font-weight="700" class="font-sans">Associate Alpha</text>
+      <text x="50" y="38" fill="#64748b" font-size="10" class="font-sans">Frontend UI / DOM</text>
+      <!-- Scope -->
+      <rect x="14" y="52" width="188" height="36" rx="4" fill="#070a12" stroke="#1e293b"/>
+      <text x="20" y="66" fill="#64748b" font-size="9" class="font-mono">DISJOINT WRITE SCOPE</text>
+      <text x="20" y="80" fill="#00f0ff" font-size="11" font-weight="600" class="font-mono">src/index.html</text>
+      <!-- Worktree -->
+      <text x="14" y="106" fill="#94a3b8" font-size="10" class="font-mono">Worktree: <tspan fill="#cbd5e1">wt-assoc-01</tspan></text>
+      <!-- Mechanical Matrix Checks -->
+      <text x="14" y="130" fill="#64748b" font-size="9" font-weight="700" class="font-mono">MECHANICAL GATES</text>
+      <circle cx="20" cy="146" r="5" fill="#10b981"/>
+      <text x="32" y="150" fill="#10b981" font-size="10" class="font-mono">DOM AST parsed</text>
+      <circle cx="20" cy="166" r="5" fill="#10b981"/>
+      <text x="32" y="170" fill="#10b981" font-size="10" class="font-mono">Event handlers ready</text>
+      <!-- Progress Bar -->
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#1e293b"/>
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#00f0ff"/>
+      <text x="14" y="212" fill="#10b981" font-size="10" font-weight="700" class="font-mono">✓ GATED &amp; MERGED</text>
+    </g>
+
+    <!-- Cubicle Cell 2: Associate Beta (Storage) -->
+    <g transform="translate(262, 74)">
+      <rect width="216" height="230" rx="8" fill="#0b101c" stroke="#2563eb" stroke-width="1.5"/>
+      <rect x="0" y="0" width="216" height="3" fill="#00f0ff"/>
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#a855f7" fill-opacity="0.2" stroke="#a855f7" stroke-width="1"/>
+      <text x="22" y="33" fill="#d8b4fe" font-size="11" font-weight="800" class="font-mono">AB</text>
+      <text x="50" y="26" fill="#ffffff" font-size="12" font-weight="700" class="font-sans">Associate Beta</text>
+      <text x="50" y="38" fill="#64748b" font-size="10" class="font-sans">State &amp; Storage</text>
+      <rect x="14" y="52" width="188" height="36" rx="4" fill="#070a12" stroke="#1e293b"/>
+      <text x="20" y="66" fill="#64748b" font-size="9" class="font-mono">DISJOINT WRITE SCOPE</text>
+      <text x="20" y="80" fill="#00f0ff" font-size="11" font-weight="600" class="font-mono">src/store.js</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="10" class="font-mono">Worktree: <tspan fill="#cbd5e1">wt-assoc-02</tspan></text>
+      <text x="14" y="130" fill="#64748b" font-size="9" font-weight="700" class="font-mono">MECHANICAL GATES</text>
+      <circle cx="20" cy="146" r="5" fill="#10b981"/>
+      <text x="32" y="150" fill="#10b981" font-size="10" class="font-mono">Serialization pass</text>
+      <circle cx="20" cy="166" r="5" fill="#10b981"/>
+      <text x="32" y="170" fill="#10b981" font-size="10" class="font-mono">Idempotent mutations</text>
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#1e293b"/>
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#00f0ff"/>
+      <text x="14" y="212" fill="#10b981" font-size="10" font-weight="700" class="font-mono">✓ GATED &amp; MERGED</text>
+    </g>
+
+    <!-- Cubicle Cell 3: Associate Gamma (Matrix & Styles) -->
+    <g transform="translate(500, 74)">
+      <rect width="216" height="230" rx="8" fill="#0b101c" stroke="#2563eb" stroke-width="1.5"/>
+      <rect x="0" y="0" width="216" height="3" fill="#00f0ff"/>
+      <rect x="14" y="14" width="28" height="28" rx="6" fill="#10b981" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+      <text x="22" y="33" fill="#34d399" font-size="11" font-weight="800" class="font-mono">AG</text>
+      <text x="50" y="26" fill="#ffffff" font-size="12" font-weight="700" class="font-sans">Associate Gamma</text>
+      <text x="50" y="38" fill="#64748b" font-size="10" class="font-sans">Matrix &amp; Styles</text>
+      <rect x="14" y="52" width="188" height="36" rx="4" fill="#070a12" stroke="#1e293b"/>
+      <text x="20" y="66" fill="#64748b" font-size="9" class="font-mono">DISJOINT WRITE SCOPE</text>
+      <text x="20" y="80" fill="#00f0ff" font-size="11" font-weight="600" class="font-mono">src/styles.css</text>
+      <text x="14" y="106" fill="#94a3b8" font-size="10" class="font-mono">Worktree: <tspan fill="#cbd5e1">wt-assoc-03</tspan></text>
+      <text x="14" y="130" fill="#64748b" font-size="9" font-weight="700" class="font-mono">MECHANICAL GATES</text>
+      <circle cx="20" cy="146" r="5" fill="#10b981"/>
+      <text x="32" y="150" fill="#10b981" font-size="10" class="font-mono">CSS flex/grid pass</text>
+      <circle cx="20" cy="166" r="5" fill="#10b981"/>
+      <text x="32" y="170" fill="#10b981" font-size="10" class="font-mono">0 loose code detected</text>
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#1e293b"/>
+      <rect x="14" y="186" width="188" height="6" rx="3" fill="#00f0ff"/>
+      <text x="14" y="212" fill="#10b981" font-size="10" font-weight="700" class="font-mono">✓ GATED &amp; MERGED</text>
+    </g>
+
+    <!-- Live Telemetry Stream Box -->
+    <g transform="translate(24, 320)">
+      <rect width="692" height="186" rx="8" fill="#06090f" stroke="#1e293b" stroke-width="1"/>
+      <text x="16" y="24" fill="#94a3b8" font-size="11" font-weight="700" class="font-mono">REAL-TIME WORKTREE &amp; SCOPE GATE STREAM</text>
+      <circle cx="664" cy="20" r="4" fill="#10b981"/>
+      <text x="635" y="24" fill="#10b981" font-size="9" class="font-mono">LIVE</text>
+      
+      <!-- Log Lines -->
+      <text x="16" y="52" fill="#64748b" font-size="11" class="font-mono">[00:01] Baseline commit sha recorded: 7d14a92c (clean working tree)</text>
+      <text x="16" y="74" fill="#38bdf8" font-size="11" class="font-mono">[00:02] Layer 1 Validator: 0 scope collisions detected. Disjoint verified.</text>
+      <text x="16" y="96" fill="#a855f7" font-size="11" class="font-mono">[00:03] Parallel Dispatch: Spawned 3 Git worktrees (.git/worktrees/wt-*)</text>
+      <text x="16" y="118" fill="#34d399" font-size="11" class="font-mono">[00:04] Assoc-01 completed contract (DOM check: PASS, step 64/120)</text>
+      <text x="16" y="140" fill="#34d399" font-size="11" class="font-mono">[00:05] Scope Gate: Audited worktree diffs vs declared writes. 0 strays.</text>
+      <text x="16" y="162" fill="#fbbf24" font-size="11" class="font-mono">[00:06] Gated Copy-back executed. 3 files staged to main branch.</text>
+    </g>
+  </g>
+
+  <!-- RIGHT COLUMN: TERMINAL & LIVE PREVIEW (WIDTH: 380) -->
+  <g transform="translate(790, 122)">
+    
+    <!-- TERMINAL WINDOW CARD -->
+    <rect width="380" height="254" rx="12" fill="#05080e" stroke="#1e293b" stroke-width="1"/>
+    <!-- Terminal Titlebar -->
+    <rect width="380" height="30" rx="12" fill="#0c111c"/>
+    <circle cx="16" cy="15" r="4.5" fill="#ef4444"/>
+    <circle cx="30" cy="15" r="4.5" fill="#f59e0b"/>
+    <circle cx="44" cy="15" r="4.5" fill="#10b981"/>
+    <text x="60" y="19" fill="#94a3b8" font-size="10" class="font-mono">OpenCode MCP — cubicore@1.18.x</text>
+
+    <!-- Terminal Code Text -->
+    <text x="16" y="56" fill="#00f0ff" font-size="11" font-weight="700" class="font-mono">founder@cubicore:~$ /cubicore:execute</text>
+    <text x="16" y="78" fill="#94a3b8" font-size="10" class="font-mono">[EXECUTE] Summoning 3 associates in parallel.</text>
+    <text x="16" y="96" fill="#94a3b8" font-size="10" class="font-mono">[ISOLATION] Layer 2 worktrees mounted.</text>
+    <text x="16" y="114" fill="#34d399" font-size="10" class="font-mono">[CHECKS] Mechanical matrix evaluated: ALL PASS</text>
+    <text x="16" y="132" fill="#d8b4fe" font-size="10" class="font-mono">[CACHE] Read 25.0M tokens (3.5× cheaper)</text>
+
+    <rect x="14" y="152" width="352" height="42" rx="6" fill="#0d1b2a" stroke="#0284c7" stroke-width="1"/>
+    <text x="24" y="170" fill="#38bdf8" font-size="10" font-weight="700" class="font-mono">THE FLOW GUIDES ITSELF:</text>
+    <text x="24" y="185" fill="#e0f2fe" font-size="11" class="font-mono">Next: /cubicore:preview · debug · refine</text>
+
+    <text x="16" y="222" fill="#10b981" font-size="11" font-weight="700" class="font-mono">founder@cubicore:~$ <tspan fill="#ffffff" class="animate-pulse">_</tspan></text>
+
+    <!-- APPLICATION PREVIEW CARD (/PREVIEW) -->
+    <g transform="translate(0, 266)">
+      <rect width="380" height="260" rx="12" fill="#090e18" stroke="#1e293b" stroke-width="1"/>
+      <!-- Browser Topbar -->
+      <rect width="380" height="30" rx="12" fill="#0d1322"/>
+      <rect x="50" y="6" width="280" height="18" rx="9" fill="#05080e" stroke="#1e293b"/>
+      <text x="64" y="18" fill="#64748b" font-size="9" class="font-mono">🔒 http://localhost:3000/todo</text>
+      <circle cx="360" cy="15" r="3" fill="#10b981"/>
+
+      <!-- App Content Preview (Todo App) -->
+      <g transform="translate(20, 44)">
+        <text x="0" y="18" fill="#ffffff" font-size="14" font-weight="700" class="font-sans">📝 Browser Todo App</text>
+        <rect x="250" y="4" width="90" height="18" rx="4" fill="#00f0ff" fill-opacity="0.15" stroke="#00f0ff" stroke-width="1"/>
+        <text x="260" y="16" fill="#00f0ff" font-size="9" font-weight="700" class="font-mono">VERIFIED LIVE</text>
+
+        <!-- Todo Items -->
+        <rect x="0" y="32" width="340" height="32" rx="6" fill="#111827" stroke="#1f2937"/>
+        <rect x="12" y="42" width="12" height="12" rx="3" fill="#10b981"/>
+        <text x="32" y="52" fill="#6b7280" font-size="11" text-decoration="line-through" class="font-sans">Define contract write scopes</text>
+
+        <rect x="0" y="70" width="340" height="32" rx="6" fill="#111827" stroke="#1f2937"/>
+        <rect x="12" y="80" width="12" height="12" rx="3" fill="#10b981"/>
+        <text x="32" y="90" fill="#6b7280" font-size="11" text-decoration="line-through" class="font-sans">Isolate git worktrees on disk</text>
+
+        <rect x="0" y="108" width="340" height="32" rx="6" fill="#111827" stroke="#2563eb"/>
+        <rect x="12" y="118" width="12" height="12" rx="3" fill="#1e293b" stroke="#3b82f6"/>
+        <text x="32" y="128" fill="#f3f4f6" font-size="11" class="font-sans">Pass mechanical matrix check</text>
+
+        <!-- Preview Stats -->
+        <text x="0" y="162" fill="#9ca3af" font-size="10" class="font-mono">Storage: LocalStorage Engine (Serialized)</text>
+        <text x="0" y="180" fill="#34d399" font-size="10" class="font-mono">0 Syntax Errors • 0 Broken Buttons</text>
+      </g>
+    </g>
+
+  </g>
+</svg>

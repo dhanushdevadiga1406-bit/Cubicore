@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="layerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .font-mono { font-family: 'JetBrains Mono', Consolas, monospace; }
+    .font-sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+
+  <rect width="1000" height="420" rx="14" fill="#06090e" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Title -->
+  <text x="30" y="38" fill="#ffffff" font-size="18" font-weight="700" class="font-sans">3-Layer Isolation Architecture</text>
+  <text x="30" y="58" fill="#64748b" font-size="12" class="font-sans">How Cubicore keeps autonomous associates physically apart on disk with zero merge conflicts</text>
+
+  <!-- LAYER 1 CARD -->
+  <g transform="translate(30, 84)">
+    <rect width="290" height="300" rx="10" fill="url(#layerBg)" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="0" y="0" width="290" height="4" fill="#38bdf8"/>
+    <rect x="16" y="16" width="120" height="20" rx="4" fill="#0284c7" fill-opacity="0.2"/>
+    <text x="24" y="30" fill="#38bdf8" font-size="10" font-weight="700" class="font-mono">LAYER 1 • PRE-DISPATCH</text>
+    <text x="16" y="60" fill="#ffffff" font-size="15" font-weight="700" class="font-sans">Plan-Time Validator</text>
+    <text x="16" y="80" fill="#94a3b8" font-size="11" class="font-sans">Rejects overlapping write scopes before any token is spent.</text>
+    
+    <rect x="16" y="104" width="258" height="68" rx="6" fill="#05080e" stroke="#1e293b"/>
+    <text x="24" y="124" fill="#ef4444" font-size="11" class="font-mono">✗ COLLISION REJECTED:</text>
+    <text x="24" y="140" fill="#94a3b8" font-size="10" class="font-mono">  src/routes/ &amp; src/routes/users.ts</text>
+    <text x="24" y="160" fill="#34d399" font-size="10" class="font-mono">✓ Disjoint: src/a.ts &amp; src/b.ts</text>
+
+    <text x="16" y="196" fill="#64748b" font-size="11" class="font-sans">Conservative over-approximation: over-reporting costs 1 re-plan; under-reporting costs a git merge conflict.</text>
+    <rect x="16" y="244" width="258" height="40" rx="6" fill="#111827"/>
+    <text x="26" y="268" fill="#38bdf8" font-size="11" font-weight="600" class="font-mono">Gated Tokens: 0 Tokens Spent</text>
+  </g>
+
+  <!-- LAYER 2 CARD -->
+  <g transform="translate(355, 84)">
+    <rect width="290" height="300" rx="10" fill="url(#layerBg)" stroke="#00f0ff" stroke-width="1.5"/>
+    <rect x="0" y="0" width="290" height="4" fill="#00f0ff"/>
+    <rect x="16" y="16" width="140" height="20" rx="4" fill="#00f0ff" fill-opacity="0.2"/>
+    <text x="24" y="30" fill="#00f0ff" font-size="10" font-weight="700" class="font-mono">LAYER 2 • IN-FLIGHT</text>
+    <text x="16" y="60" fill="#ffffff" font-size="15" font-weight="700" class="font-sans">Git Worktrees On Disk</text>
+    <text x="16" y="80" fill="#94a3b8" font-size="11" class="font-sans">Airtight filesystem isolation. Workers are physically separated.</text>
+    
+    <rect x="16" y="104" width="258" height="68" rx="6" fill="#05080e" stroke="#1e293b"/>
+    <text x="24" y="124" fill="#00f0ff" font-size="11" class="font-mono">ISOLATED DIRECTORIES:</text>
+    <text x="24" y="140" fill="#94a3b8" font-size="10" class="font-mono">  .git/worktrees/wt-assoc-01/</text>
+    <text x="24" y="158" fill="#94a3b8" font-size="10" class="font-mono">  .git/worktrees/wt-assoc-02/</text>
+
+    <text x="16" y="196" fill="#64748b" font-size="11" class="font-sans">Two workers cannot touch one file at the same time. OpenCode 1.18.x bounded to 120 steps per associate.</text>
+    <rect x="16" y="244" width="258" height="40" rx="6" fill="#111827"/>
+    <text x="26" y="268" fill="#00f0ff" font-size="11" font-weight="600" class="font-mono">Collisions: 0 Merge Conflicts</text>
+  </g>
+
+  <!-- LAYER 3 CARD -->
+  <g transform="translate(680, 84)">
+    <rect width="290" height="300" rx="10" fill="url(#layerBg)" stroke="#1e293b" stroke-width="1.5"/>
+    <rect x="0" y="0" width="290" height="4" fill="#10b981"/>
+    <rect x="16" y="16" width="120" height="20" rx="4" fill="#10b981" fill-opacity="0.2"/>
+    <text x="24" y="30" fill="#10b981" font-size="10" font-weight="700" class="font-mono">LAYER 3 • POST-WORK</text>
+    <text x="16" y="60" fill="#ffffff" font-size="15" font-weight="700" class="font-sans">Scope Gate &amp; Matrix</text>
+    <text x="16" y="80" fill="#94a3b8" font-size="11" class="font-sans">Mechanical verification gate audits declared vs actual diffs.</text>
+    
+    <rect x="16" y="104" width="258" height="68" rx="6" fill="#05080e" stroke="#1e293b"/>
+    <text x="24" y="124" fill="#10b981" font-size="11" class="font-mono">GATED CHECKS:</text>
+    <text x="24" y="140" fill="#94a3b8" font-size="10" class="font-mono">  Errors &amp; Warnings: BLOCKING</text>
+    <text x="24" y="158" fill="#fbbf24" font-size="10" class="font-mono">  Judgement Calls: ADVISORY</text>
+
+    <text x="16" y="196" fill="#64748b" font-size="11" class="font-sans">Stray files are caught and isolated. Files copied to main repository only after mechanical matrix passes.</text>
+    <rect x="16" y="244" width="258" height="40" rx="6" fill="#111827"/>
+    <text x="26" y="268" fill="#10b981" font-size="11" font-weight="600" class="font-mono">Matrix Gate: 100% Verified</text>
+  </g>
+</svg>

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cubicore | Dynamic Multi-Agentic Factory of Sub-Agents</title>
+  <meta name="description" content="Cubicore is a Dynamic Multi-Agentic Factory of Sub-agents utilizing the Decrease-and-Conquer technique to build software projects from home.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+  <!-- Top Telemetry & Control Bar -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <div class="brand-cube">
+        <div class="cube-face front"></div>
+        <div class="cube-face back"></div>
+        <div class="cube-face right"></div>
+        <div class="cube-face left"></div>
+        <div class="cube-face top"></div>
+        <div class="cube-face bottom"></div>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">CUBICORE <span class="badge badge-primary">MCP CORE</span></div>
+        <div class="brand-sub">Dynamic Multi-Agentic Factory • Decrease-and-Conquer</div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Badges -->
+    <div class="telemetry-bar">
+      <div class="telemetry-item" title="Active Model / Host">
+        <span class="telemetry-label">HOST AGENT:</span>
+        <span class="telemetry-value active-pulse"><span class="status-dot green"></span> OpenCode v1.18.x</span>
+      </div>
+      <div class="telemetry-item" title="Cycle Budget (Capped at 3 cycles)">
+        <span class="telemetry-label">CYCLE BUDGET:</span>
+        <span class="telemetry-value" id="navCycleBudget">Cycle 1/3 (Bounded)</span>
+      </div>
+      <div class="telemetry-item" title="Active Git Worktrees">
+        <span class="telemetry-label">WORKTREES:</span>
+        <span class="telemetry-value" id="navWorktreeCount">0 Active</span>
+      </div>
+      <div class="telemetry-item" title="Token Cache Efficiency">
+        <span class="telemetry-label">CACHE READS:</span>
+        <span class="telemetry-value text-accent" id="navTokenEfficiency">25.0M tok (3.5× Saved)</span>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Actions -->
+    <div class="nav-actions">
+      <button class="btn btn-sm btn-ghost" id="soundToggleBtn" title="Toggle UI Audio Feedback">
+        <span class="icon">🔊</span> Audio
+      </button>
+      <a href="#setup-modal" class="btn btn-sm btn-outline" id="openSetupBtn">
+        <span class="icon">⚡</span> Setup Guide
+      </a>
+      <a href="#cubicle-section" class="btn btn-sm btn-primary">
+        <span class="icon">🚀</span> Launch Factory
+      </a>
+    </div>
+  </header>
+
+  <!-- Sticky Guided Flow Notification Bar -->
+  <aside class="guided-flow-strip" id="guidedFlowStrip" aria-label="Guided Workflow Status">
+    <div class="flow-pill">
+      <span class="flow-badge">NEXT RECOMMENDED STEP</span>
+      <span class="flow-current-state" id="guidedStateText">State: <strong>no plan</strong></span>
+    </div>
+    <div class="flow-command-group">
+      <span class="flow-prompt-label">Run Command:</span>
+      <code class="flow-command-pill" id="guidedMainCommand" onclick="terminalRunCommand(this.textContent)">/cubicore:plan-demo</code>
+      <span class="flow-alternatives-label">or alternatives:</span>
+      <div class="flow-alt-buttons" id="guidedAltCommands">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+    <div class="flow-hint">Derived strictly from state on disk • Survives session restarts</div>
+  </aside>
+
+  <!-- Main Container -->
+  <main class="main-layout">
+    
+    <!-- Hero / Factory Overview -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge-row">
+          <span class="badge badge-accent">“Cores in a Cubicle”</span>
+          <span class="badge badge-neutral">Autonomous Fleet of Engineers</span>
+          <span class="badge badge-success">Disjoint Write Scopes</span>
+        </div>
+        <h1 class="hero-title">
+          Build a Software Company at Home with <span class="gradient-text">Sub-Agent Fleets</span>
+        </h1>
+        <p class="hero-description">
+          You are the founder. Fellow sub-agents are your engineering associates.
+          Cubicore scales its <strong>Dynamic Cubicle</strong> to match your project size, assigns 1 task per agent in isolated Git worktrees, verifies with mechanical check matrices, and deploys without merge conflicts.
+        </p>
+
+        <!-- Lazy Prompt Presets / Launchpad -->
+        <div class="lazy-prompt-card">
+          <div class="card-header-line">
+            <span class="label-heading"><span class="icon">🧪</span> LAZY PROMPTS — NO SPEC NEEDED</span>
+            <span class="sub-label">Select a scenario or type in plain words:</span>
+          </div>
+
+          <div class="preset-selector-tabs">
+            <button class="preset-tab active" data-preset="demo">
+              <span class="tab-type">Solo — Demo</span>
+              <span class="tab-cmd">/cubicore:plan-demo</span>
+            </button>
+            <button class="preset-tab" data-preset="full">
+              <span class="tab-type">Solo — Full</span>
+              <span class="tab-cmd">/cubicore:plan-full</span>
+            </button>
+            <button class="preset-tab" data-preset="team-demo">
+              <span class="tab-type">Team of 3 — Demo</span>
+              <span class="tab-cmd">Split planNumber 1..3</span>
+            </button>
+            <button class="preset-tab" data-preset="team-full">
+              <span class="tab-type">Team of 3 — Full</span>
+              <span class="tab-cmd">Agency Client Portal</span>
+            </button>
+          </div>
+
+          <div class="preset-input-box">
+            <div class="input-prefix">Founder Prompt:</div>
+            <textarea id="promptInputArea" rows="2" class="hero-prompt-input" placeholder="Say what you want in plain words..."></textarea>
+            <div class="input-actions">
+              <button class="btn btn-secondary" id="btnPlanScope">
+                <span class="icon">📐</span> Plan & Expand Cubicle
+              </button>
+              <button class="btn btn-primary" id="btnQuickDispatch">
+                <span class="icon">⚡</span> Execute Fleet (/cubicore:execute)
+              </button>
+            </div>
+          </div>
+
+          <div class="preset-summary-details" id="presetSummaryDetails">
+            <span class="tag">Scope: Simple Browser Todo App</span>
+            <span class="tag">3 Sub-Agents</span>
+            <span class="tag">Disjoint Contracts: UI, Storage, Validation</span>
+            <span class="tag">Failing Checks Prepared</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-num text-cyan">3.5×</div>
+          <div class="stat-label">Cheaper than Naive Fan-Out</div>
+          <div class="stat-sub">25.0M tokens vs 96.0M on cache reads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num text-emerald">0</div>
+          <div class="stat-label">Git Merge Conflicts</div>
+          <div class="stat-sub">Enforced 3-layer filesystem isolation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num text-amber">≤ 3</div>
+          <div class="stat-label">Bounded Cycle Cap</div>
+          <div class="stat-sub">Finite repair loop avoids endless agent spinning</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num text-purple">120</div>
+          <div class="stat-label">Max Steps Per Associate</div>
+          <div class="stat-sub">Bounded primary runtime in OpenCode</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tab Bar for Central Modules -->
+    <nav class="module-tabs-nav" aria-label="Core Module Navigation">
+      <button class="nav-tab-btn active" data-target="cubicle-section">
+        <span class="tab-icon">🏢</span> Dynamic Cubicle Factory
+      </button>
+      <button class="nav-tab-btn" data-target="terminal-section">
+        <span class="tab-icon">💻</span> 14-Command Terminal
+      </button>
+      <button class="nav-tab-btn" data-target="preview-section">
+        <span class="tab-icon">🖥️</span> App Preview (/preview)
+      </button>
+      <button class="nav-tab-btn" data-target="artifacts-section">
+        <span class="tab-icon">📑</span> Artifacts & Contracts
+      </button>
+      <button class="nav-tab-btn" data-target="isolation-section">
+        <span class="tab-icon">🛡️</span> 3-Layer Isolation
+      </button>
+      <button class="nav-tab-btn" data-target="benchmarks-section">
+        <span class="tab-icon">📊</span> Honest Benchmarks
+      </button>
+      <button class="nav-tab-btn" data-target="agents-section">
+        <span class="tab-icon">🤖</span> AI Agents Roster
+      </button>
+    </nav>
+
+    <!-- SECTION 1: Dynamic Cubicle Factory Simulator -->
+    <section id="cubicle-section" class="module-section active">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">CORE PHILOSOPHY</span>
+          <h2 class="section-title">The Dynamic Cubicle Visualizer</h2>
+          <p class="section-subtitle">
+            The Cubicle dynamically adjusts its size based on the project plan. When planning finishes, the Cubicle locks size. Execution summons 1 sub-agent per task in parallel.
+          </p>
+        </div>
+        <div class="section-controls">
+          <button class="btn btn-sm btn-outline" id="btnSimReset">
+            <span class="icon">🔄</span> Reset Cubicle
+          </button>
+          <button class="btn btn-sm btn-secondary" id="btnSimPlan">
+            <span class="icon">📝</span> 1. Plan (/plan)
+          </button>
+          <button class="btn btn-sm btn-primary" id="btnSimExecute">
+            <span class="icon">🚀</span> 2. Execute (/execute)
+          </button>
+          <button class="btn btn-sm btn-warning" id="btnSimDebug">
+            <span class="icon">🔧</span> 3. Debug Matrix (/debug)
+          </button>
+          <button class="btn btn-sm btn-success" id="btnSimDeploy">
+            <span class="icon">🚢</span> 4. Deploy (/deploy)
+          </button>
+        </div>
+      </div>
+
+      <!-- Factory Stage Tracker -->
+      <div class="factory-stepper">
+        <div class="step-node active" id="stepNode1">
+          <div class="node-circle">1</div>
+          <div class="node-content">
+            <span class="node-title">Prepare & Research</span>
+            <span class="node-meta">Git baseline + module tree</span>
+          </div>
+        </div>
+        <div class="step-connector" id="stepConn1"></div>
+        <div class="step-node" id="stepNode2">
+          <div class="node-circle">2</div>
+          <div class="node-content">
+            <span class="node-title">Scope & Plan Size</span>
+            <span class="node-meta">Cubicle expands dynamically</span>
+          </div>
+        </div>
+        <div class="step-connector" id="stepConn2"></div>
+        <div class="step-node" id="stepNode3">
+          <div class="node-circle">3</div>
+          <div class="node-content">
+            <span class="node-title">Parallel Dispatch</span>
+            <span class="node-meta">1 task : 1 associate agent</span>
+          </div>
+        </div>
+        <div class="step-connector" id="stepConn3"></div>
+        <div class="step-node" id="stepNode4">
+          <div class="node-circle">4</div>
+          <div class="node-content">
+            <span class="node-title">Mechanical Matrix</span>
+            <span class="node-meta">Gated check verification</span>
+          </div>
+        </div>
+        <div class="step-connector" id="stepConn4"></div>
+        <div class="step-node" id="stepNode5">
+          <div class="node-circle">5</div>
+          <div class="node-content">
+            <span class="node-title">Preview & Ship</span>
+            <span class="node-meta">Localhost & deployment tier</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Cubicle Floor Grid -->
+      <div class="cubicle-stage-container">
+        <!-- Floor Header Status -->
+        <div class="cubicle-stage-header">
+          <div class="cubicle-status-left">
+            <span class="stage-indicator" id="cubicleStageLabel"><span class="status-dot blue"></span> STATUS: CUBICLE IDLE — AWAITING PLAN</span>
+            <span class="stage-metric" id="cubicleCapacityLabel">Capacity: 0 Cells active</span>
+          </div>
+          <div class="cubicle-status-right">
+            <span class="badge badge-outline" id="activeWorktreeBadge">Worktrees: Isolated</span>
+            <span class="badge badge-accent" id="activeCycleBadge">Cycle: 0 / 3</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Grid Layout -->
+        <div class="dynamic-cubicle-grid" id="cubicleGrid">
+          <!-- Dynamically filled by JS with Associate Cubicle Desks -->
+          <div class="cubicle-empty-state" id="cubicleEmptyPlaceholder">
+            <div class="empty-icon">🏢</div>
+            <h3>Cubicle Has Not Expanded Yet</h3>
+            <p>Click <strong>"Plan & Expand Cubicle"</strong> above or enter a prompt to watch the factory dynamically scale its cubicle cells and provision sub-agent associates.</p>
+          </div>
+        </div>
+
+        <!-- Live Worktree & Matrix Feed -->
+        <div class="cubicle-telemetry-panel">
+          <div class="telemetry-panel-header">
+            <span><span class="icon">📡</span> LIVE SUB-AGENT TELEMETRY & WORKTREE AUDIT</span>
+            <span class="stream-pulse">REAL-TIME FEED</span>
+          </div>
+          <div class="telemetry-log-stream" id="cubicleLogStream">
+            <div class="log-line text-muted">[System] Cubicore MCP engine initialized. Bounded step limit: 120 per associate.</div>
+            <div class="log-line text-muted">[Baseline] Git repo detected. Recording clean baseline commit sha: 7d14a9...</div>
+            <div class="log-line text-info">[Guide] No active plan. Run /cubicore:plan-demo or /cubicore:plan-full.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: 14-Command Interactive Terminal -->
+    <section id="terminal-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">CLI CONTROL</span>
+          <h2 class="section-title">Cubicore Interactive Terminal</h2>
+          <p class="section-subtitle">
+            Fourteen specialized commands power the factory. Every reply ends with what to type next, derived from state on disk.
+          </p>
+        </div>
+        <div class="quick-command-chips">
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:plan-demo')">/cubicore:plan-demo</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:plan-full')">/cubicore:plan-full</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:estimate')">/cubicore:estimate</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:execute')">/cubicore:execute</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:status')">/cubicore:status</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:debug')">/cubicore:debug</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:preview')">/cubicore:preview</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:continue')">/cubicore:continue</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:refine')">/cubicore:refine</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:deploy')">/cubicore:deploy</button>
+          <button class="cmd-chip" onclick="terminalRunCommand('/cubicore:undo')">/cubicore:undo</button>
+          <button class="cmd-chip btn-clear-terminal" onclick="terminalClear()">clear</button>
+        </div>
+      </div>
+
+      <div class="terminal-container">
+        <div class="terminal-window-header">
+          <div class="window-buttons">
+            <span class="win-btn red"></span>
+            <span class="win-btn yellow"></span>
+            <span class="win-btn green"></span>
+          </div>
+          <div class="terminal-title">OpenCode MCP Session — cubicore@v1.18.x</div>
+          <div class="terminal-info-tag">Decrease-and-Conquer Engine</div>
+        </div>
+
+        <div class="terminal-body" id="terminalOutput">
+          <div class="term-line banner">   ______      __     _                     </div>
+          <div class="term-line banner">  / ____/_  __/ /_   (_)________  ________  </div>
+          <div class="term-line banner"> / /   / / / / __ \ / / ___/ __ \/ ___/ _ \ </div>
+          <div class="term-line banner">/ /___/ /_/ / /_/ // / /__/ /_/ / /  /  __/ </div>
+          <div class="term-line banner">\____/\__,_/_.___//_/\___/\____/_/   \___/  </div>
+          <div class="term-line term-intro">Dynamic Multi-Agentic Factory • "Cores in a Cubicle"</div>
+          <div class="term-line text-muted">Type any command below or click a chip. Try "/cubicore:plan-demo" to begin.</div>
+          <div class="term-divider"></div>
+        </div>
+
+        <div class="terminal-input-bar">
+          <span class="term-prompt">founder@cubicore:~$</span>
+          <input type="text" id="terminalInput" class="term-input" placeholder="Type a /cubicore command or 'help'..." autocomplete="off">
+          <button class="btn btn-sm btn-primary" id="btnTermSend">Execute</button>
+        </div>
+      </div>
+
+      <!-- Quick Command Dictionary Accordion -->
+      <div class="command-reference-grid">
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:plan-demo</div>
+          <div class="cmd-desc">Demo mode. Prepares git, researches repo, asks clarifying questions, and generates CUBICORE_PLAN.md & JSON. Dispatches nothing.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:plan-full</div>
+          <div class="cmd-desc">Full product mode. Scopes 6–12 contracts (API, UI, storage, test checks) for comprehensive apps.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:execute</div>
+          <div class="cmd-desc">Dispatches the plan! One brief per associate summoned in parallel. Enforces cycle budget and worktree isolation.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:continue</div>
+          <div class="cmd-desc">Resumes the last run from where it stopped — skips contracts already verified. Exempt from cycle budget.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:debug</div>
+          <div class="cmd-desc">Review, test, and fix delivered work until mechanical issues disappear. Writes CUBICORE_DEBUG.md. Judgement never blocks.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:refine</div>
+          <div class="cmd-desc">Mandatory iterative editing command. Add features or change existing plans without destroying verified contracts.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:estimate</div>
+          <div class="cmd-desc">Calculates cost before anything is spent: token ceilings, wall-clock bounds, and associate ownership matrix.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:preview</div>
+          <div class="cmd-desc">Runs the delivered application the way the founder uses it on localhost. Verifies CLI/GUI/TUI interfaces.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:deploy</div>
+          <div class="cmd-desc">Plans deployment, recommends stacks, writes deploy configs, and explains manual steps. Deploys nothing itself.</div>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-name">/cubicore:status</div>
+          <div class="cmd-desc">Reports status of in-flight worktrees and waits if workers are actively compiling or running tests.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Live App Preview Pane -->
+    <section id="preview-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">LIVE VERIFICATION</span>
+          <h2 class="section-title">Application Preview (/cubicore:preview)</h2>
+          <p class="section-subtitle">
+            "A contract can be correct and still not run." Cubicore launches the app using the plan's preview block so the founder can inspect the real working software.
+          </p>
+        </div>
+        <div class="section-controls">
+          <div class="preview-mode-switch">
+            <button class="btn btn-sm btn-outline active" id="btnPreviewTodo">Demo: Todo App</button>
+            <button class="btn btn-sm btn-outline" id="btnPreviewFinance">Full: Finance Tracker</button>
+          </div>
+          <span class="preview-status-pill"><span class="status-dot green"></span> Running on localhost:3000</span>
+        </div>
+      </div>
+
+      <!-- Live Mock Application Container -->
+      <div class="preview-viewport-card">
+        <div class="browser-address-bar">
+          <div class="window-dots">
+            <span class="win-btn red"></span>
+            <span class="win-btn yellow"></span>
+            <span class="win-btn green"></span>
+          </div>
+          <div class="address-field">
+            <span class="lock-icon">🔒</span>
+            <span class="url-text" id="previewUrlDisplay">http://localhost:3000/app</span>
+          </div>
+          <button class="btn-refresh" id="btnPreviewReload" title="Reload App">↻</button>
+        </div>
+
+        <div class="preview-screen-content" id="previewScreenContainer">
+          <!-- Dynamically Swapped between Todo App and Finance Tracker -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Artifacts & Contracts Inspector -->
+    <section id="artifacts-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">AUDITABLE OUTPUTS</span>
+          <h2 class="section-title">Artifacts, Contracts & Context</h2>
+          <p class="section-subtitle">
+            Cubicore generates clean Markdown and JSON artifacts. Scopes are disjoint; context is written for human founders and never affects what gets built.
+          </p>
+        </div>
+        <div class="section-controls">
+          <button class="btn btn-sm btn-secondary" id="btnCopyArtifact">
+            <span class="icon">📋</span> Copy Artifact
+          </button>
+        </div>
+      </div>
+
+      <div class="artifact-viewer-container">
+        <div class="artifact-nav-tabs">
+          <button class="artifact-tab active" data-file="plan_md">
+            <span class="file-icon">📄</span> CUBICORE_PLAN.md
+            <span class="file-tag">Human Review</span>
+          </button>
+          <button class="artifact-tab" data-file="plan_json">
+            <span class="file-icon">📦</span> CUBICORE_PLAN.json
+            <span class="file-tag">Dispatchable</span>
+          </button>
+          <button class="artifact-tab" data-file="context_md">
+            <span class="file-icon">💡</span> CUBICORE_CONTEXT.md
+            <span class="file-tag">Pitch Narrative</span>
+          </button>
+          <button class="artifact-tab" data-file="debug_md">
+            <span class="file-icon">🔧</span> CUBICORE_DEBUG.md
+            <span class="file-tag">Check Matrix</span>
+          </button>
+        </div>
+
+        <div class="artifact-file-meta">
+          <span class="meta-item" id="artifactFilePath">Path: ./CUBICORE_PLAN.md</span>
+          <span class="meta-item" id="artifactFileSize">Size: 4.8 KB</span>
+          <span class="meta-item" id="artifactValidationStatus">Validation: Passed (Disjoint Scopes)</span>
+        </div>
+
+        <pre class="artifact-code-viewport"><code id="artifactCodeContent" class="language-markdown"><!-- Code injected by JS --></code></pre>
+      </div>
+    </section>
+
+    <!-- SECTION 5: 3-Layer Isolation Architecture -->
+    <section id="isolation-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">SECURITY & CONCURRENCY</span>
+          <h2 class="section-title">How Associates Are Kept Apart</h2>
+          <p class="section-subtitle">
+            OpenCode 1.18.x cannot restrict an agent to a path; its permissions are per-action, not per-resource. Cubicore provides three layers of isolation.
+          </p>
+        </div>
+      </div>
+
+      <div class="isolation-cards-grid">
+        <div class="iso-card layer-1">
+          <div class="iso-badge">LAYER 1 • PRE-DISPATCH</div>
+          <div class="iso-icon">🛡️</div>
+          <h3 class="iso-title">Plan-Time Validator</h3>
+          <p class="iso-desc">
+            Rejects overlapping write scopes before a single token is spent. It is a conservative over-approximation:
+          </p>
+          <div class="iso-code-box">
+            <div class="code-line text-danger">✗ Collision: src/routes/ & src/routes/users.ts</div>
+            <div class="code-line text-success">✓ Disjoint:  src/auth.ts & src/billing.ts</div>
+          </div>
+          <div class="iso-footer">
+            Over-reporting costs 1 re-plan; under-reporting costs a merge conflict.
+          </div>
+        </div>
+
+        <div class="iso-card layer-2 featured">
+          <div class="iso-badge">LAYER 2 • IN FLIGHT (AIRTIGHT)</div>
+          <div class="iso-icon">🌿</div>
+          <h3 class="iso-title">Per-Associate Git Worktrees</h3>
+          <p class="iso-desc">
+            Each associate gets its own isolated git worktree on disk. Two workers physically cannot be in one file at the same moment.
+          </p>
+          <div class="iso-code-box">
+            <div class="code-line text-info">Worker 1: .git/worktrees/associate-ui/</div>
+            <div class="code-line text-info">Worker 2: .git/worktrees/associate-db/</div>
+          </div>
+          <div class="iso-footer">
+            Files are copied back to main tree ONLY after mechanical checks pass!
+          </div>
+        </div>
+
+        <div class="iso-card layer-3">
+          <div class="iso-badge">LAYER 3 • POST-WORK</div>
+          <div class="iso-icon">⚖️</div>
+          <h3 class="iso-title">Scope Gate & Mechanical Matrix</h3>
+          <p class="iso-desc">
+            Audits what actually changed against what was declared. A worker that strayed is caught immediately.
+          </p>
+          <div class="iso-code-box">
+            <div class="code-line text-warning">Mechanical checks: Errors & warnings block</div>
+            <div class="code-line text-muted">Judgement calls: Advisory, never block founder</div>
+          </div>
+          <div class="iso-footer">
+            Unverified checks are marked as unverified, not failed.
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Collision Tester -->
+      <div class="collision-tester-widget">
+        <div class="tester-header">
+          <span class="icon">🔍</span>
+          <h4>Interactive Disjoint Scope Validator Simulator</h4>
+        </div>
+        <div class="tester-inputs">
+          <div class="tester-field">
+            <label>Associate A Write Scope:</label>
+            <input type="text" id="scopeInputA" value="src/components/Header.tsx" class="tester-input">
+          </div>
+          <div class="tester-field">
+            <label>Associate B Write Scope:</label>
+            <input type="text" id="scopeInputB" value="src/components/" class="tester-input">
+          </div>
+          <button class="btn btn-primary" id="btnTestCollision">Validate Overlap</button>
+        </div>
+        <div class="tester-result" id="scopeTestResult">
+          <span class="status-indicator-badge red">COLLISION DETECTED</span>
+          <span><code>src/components/</code> collides with <code>src/components/Header.tsx</code>. Over-approximation triggers replan!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Honest Benchmarks & Amdahl's Law -->
+    <section id="benchmarks-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">EMPIRICAL DATA</span>
+          <h2 class="section-title">The Honest Claim: Benchmark & Economics</h2>
+          <p class="section-subtitle">
+            Splitting work without coordination is not free parallelism. Splitting is what makes naive fan-out slow. Cubicore is what makes splitting pay.
+          </p>
+        </div>
+      </div>
+
+      <div class="benchmarks-grid">
+        <!-- Interactive Chart / Comparison Card -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h4>Token Expenditure: 12-Worker Task</h4>
+            <span class="chart-badge">Cache Reads</span>
+          </div>
+          <div class="chart-bars">
+            <div class="bar-group">
+              <div class="bar-meta">
+                <span class="bar-title">Naive Fan-Out (Uncoordinated)</span>
+                <span class="bar-val text-danger">96.0M Tokens (10.9×)</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill danger" style="width: 100%;"></div>
+              </div>
+              <div class="bar-note">Every worker loaded entire repository context into prompt. Collisions occurred.</div>
+            </div>
+
+            <div class="bar-group">
+              <div class="bar-meta">
+                <span class="bar-title">Cubicore Dynamic Cubicle</span>
+                <span class="bar-val text-accent">25.0M Tokens (3.5× Cheaper)</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill accent" style="width: 26%;"></div>
+              </div>
+              <div class="bar-note">Narrow disjoint write scopes: workers read only what their contract needs.</div>
+            </div>
+
+            <div class="bar-group">
+              <div class="bar-meta">
+                <span class="bar-title">Single Agent Baseline</span>
+                <span class="bar-val text-muted">8.8M Tokens (Small tasks)</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width: 9.1%;"></div>
+              </div>
+              <div class="bar-note">Cubicore is overhead for 1-pass trivial tasks. Honest Amdahl limit applies.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honest Conditions Table -->
+        <div class="conditions-table-card">
+          <h4>When Cubicore Pays Off</h4>
+          <table class="honest-table">
+            <thead>
+              <tr>
+                <th>Project Situation</th>
+                <th>Cubicore Verdict</th>
+                <th>Technical Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Several hours of independent work</strong></td>
+                <td><span class="badge badge-success">Worth It</span></td>
+                <td>3.5× cheaper tokens than naive fan-out; 0 merge collisions.</td>
+              </tr>
+              <tr>
+                <td><strong>Couple of hours, or one sitting</strong></td>
+                <td><span class="badge badge-warning">Overhead</span></td>
+                <td>3.1× the tokens for wall-clock parity. Single agent is faster.</td>
+              </tr>
+              <tr>
+                <td><strong>Coupled work, shared core, tight integration</strong></td>
+                <td><span class="badge badge-danger">Refused</span></td>
+                <td>Topology check catches it before a single token is spent.</td>
+              </tr>
+              <tr>
+                <td><strong>One agent, done in one pass</strong></td>
+                <td><span class="badge badge-neutral">Overhead</span></td>
+                <td>Plan explicitly warns you to use standard prompt.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-footnote">
+            “The real value is not speed. It is that four agents can work on the same repository without colliding, and that ‘done’ means the checks passed rather than that a model said so.”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: AI Agents Roster -->
+    <section id="agents-section" class="module-section">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">COMPATIBILITY</span>
+          <h2 class="section-title">Supported AI Agent Ecosystem</h2>
+          <p class="section-subtitle">
+            Cubicore interfaces with AI agents via inline sub-tasks or session dispatch.
+          </p>
+        </div>
+      </div>
+
+      <div class="agents-roster-grid">
+        <div class="agent-card active-agent">
+          <div class="agent-card-header">
+            <div class="agent-avatar opencode">OC</div>
+            <div class="agent-name-group">
+              <h4 class="agent-name">OpenCode</h4>
+              <span class="agent-badge active">✅ Production Ready</span>
+            </div>
+          </div>
+          <div class="agent-body">
+            <p class="agent-desc">
+              Primary production runtime. Supports Native (CLI/Desktop) and Flatpak on Linux. Primary agent bounded to 120 steps.
+            </p>
+            <div class="agent-metrics">
+              <div class="metric-row">
+                <span>Progress:</span>
+                <span class="text-success font-bold">Done (Optimizing sub-tasks)</span>
+              </div>
+              <div class="metric-row">
+                <span>Isolation Method:</span>
+                <span>Worktrees + Filesystem Gates</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-footer">
+            <code class="code-sm">npx cubicore@latest setup</code>
+          </div>
+        </div>
+
+        <div class="agent-card pending-agent">
+          <div class="agent-card-header">
+            <div class="agent-avatar claude">CC</div>
+            <div class="agent-name-group">
+              <h4 class="agent-name">Claude Code</h4>
+              <span class="agent-badge pending">⏰ Scheduled</span>
+            </div>
+          </div>
+          <div class="agent-body">
+            <p class="agent-desc">
+              Implementing inline sub-tasks dispatch architecture.
+            </p>
+            <div class="agent-metrics">
+              <div class="metric-row">
+                <span>Status:</span>
+                <span class="text-warning">Not Started</span>
+              </div>
+              <div class="metric-row">
+                <span>Feature:</span>
+                <span>Inline Sub-Tasks</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-footer">
+            <span class="text-muted">Coming in v1.2</span>
+          </div>
+        </div>
+
+        <div class="agent-card pending-agent">
+          <div class="agent-card-header">
+            <div class="agent-avatar codex">CX</div>
+            <div class="agent-name-group">
+              <h4 class="agent-name">Codex</h4>
+              <span class="agent-badge pending">⏰ In Progress</span>
+            </div>
+          </div>
+          <div class="agent-body">
+            <p class="agent-desc">
+              Has Inline Sub-tasks support; requires further token reduction optimization.
+            </p>
+            <div class="agent-metrics">
+              <div class="metric-row">
+                <span>Status:</span>
+                <span class="text-warning">Token Optimization Needed</span>
+              </div>
+              <div class="metric-row">
+                <span>Architecture:</span>
+                <span>Sub-Task Graph</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-footer">
+            <span class="text-muted">In Development</span>
+          </div>
+        </div>
+
+        <div class="agent-card pending-agent">
+          <div class="agent-card-header">
+            <div class="agent-avatar cursor">CR</div>
+            <div class="agent-name-group">
+              <h4 class="agent-name">Cursor</h4>
+              <span class="agent-badge pending">⏰ Session-Only</span>
+            </div>
+          </div>
+          <div class="agent-body">
+            <p class="agent-desc">
+              Uses Sessions architecture; tedious to implement as the first session-only integration.
+            </p>
+            <div class="agent-metrics">
+              <div class="metric-row">
+                <span>Status:</span>
+                <span class="text-warning">Architecture Design</span>
+              </div>
+              <div class="metric-row">
+                <span>Model:</span>
+                <span>Session Multiplexing</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-footer">
+            <span class="text-muted">Roadmap</span>
+          </div>
+        </div>
+
+        <div class="agent-card pending-agent">
+          <div class="agent-card-header">
+            <div class="agent-avatar windsurf">WS</div>
+            <div class="agent-name-group">
+              <h4 class="agent-name">Windsurf</h4>
+              <span class="agent-badge pending">⏰ Evaluating</span>
+            </div>
+          </div>
+          <div class="agent-body">
+            <p class="agent-desc">
+              Evaluating either Inline Sub-tasks or Sessions dispatch mechanisms.
+            </p>
+            <div class="agent-metrics">
+              <div class="metric-row">
+                <span>Status:</span>
+                <span class="text-warning">Research Phase</span>
+              </div>
+              <div class="metric-row">
+                <span>Target:</span>
+                <span>Cascade Engine Bridge</span>
+              </div>
+            </div>
+          </div>
+          <div class="agent-footer">
+            <span class="text-muted">Researching</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Installation Wizard Modal/Drawer -->
+    <div class="modal-backdrop" id="setupModal" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <span class="icon">📦</span>
+            <h3>Cubicore Global Setup Wizard</h3>
+          </div>
+          <button class="btn-close-modal" id="btnCloseSetupModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="wizard-steps-list">
+            <div class="wizard-step">
+              <div class="wiz-num">1</div>
+              <div class="wiz-text">
+                <h5>Run Global Setup</h5>
+                <p>Installs globally for your user account (never into a project repo):</p>
+                <div class="copy-box">
+                  <code>npx cubicore@latest setup</code>
+                  <button class="btn-copy-code" onclick="copySetupCode('npx cubicore@latest setup')">Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-step">
+              <div class="wiz-num">2</div>
+              <div class="wiz-text">
+                <h5>Select OpenCode Variant</h5>
+                <p>The interactive CLI detects your environment:</p>
+                <ul class="wiz-options">
+                  <li><strong>Native (CLI / Desktop)</strong> (Default Windows/macOS/Linux)</li>
+                  <li><strong>Flatpak</strong> (Linux sandboxed packaging)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="wizard-step">
+              <div class="wiz-num">3</div>
+              <div class="wiz-text">
+                <h5>MCP Registration & Associate Limits</h5>
+                <p>Registers <code>mcp.cubicore</code> in your global configuration and installs associate agents bounded to 120 steps.</p>
+              </div>
+            </div>
+
+            <div class="wizard-step">
+              <div class="wiz-num">4</div>
+              <div class="wiz-text">
+                <h5>Launch in Any Directory</h5>
+                <div class="copy-box">
+                  <code>/cubicore:plan-demo</code>
+                  <button class="btn-copy-code" onclick="copySetupCode('/cubicore:plan-demo')">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="btnModalCloseDone">Got It, Let's Build</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">CUBICORE</span>
+        <span class="footer-copy">“A Fleet of Engineers in a Company” • Decrease-and-Conquer Technique</span>
+      </div>
+      <div class="footer-links">
+        <a href="#cubicle-section">Dynamic Cubicle</a>
+        <a href="#terminal-section">Terminal</a>
+        <a href="#preview-section">Preview</a>
+        <a href="#artifacts-section">Artifacts</a>
+        <a href="#benchmarks-section">Honest Benchmarks</a>
+        <a href="https://github.com/velo4705/cubicore" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript Application Entry -->
+  <script src="app.js"></script>
+</body>
+</html>
